@@ -1,8 +1,8 @@
 import React from "react";
 
 const starStyle = {
-  height: "48px",
-  width: "48px",
+  height: "24px",
+  width: "24px",
   display: "block",
   cursor: "pointer",
 };
