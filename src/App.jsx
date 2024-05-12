@@ -13,7 +13,6 @@ import SearchBox from "./components/SearchBox";
 import SelectedMovieDetails from "./components/SelectedMovieDetails";
 
 export default function App() {
-
   const tempWatchedData = [
     {
       imdbID: "tt1375666",
@@ -43,7 +42,7 @@ export default function App() {
   const KEY = "ab273a71";
 
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState(tempWatchedData);
+  const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState("inception");
   const [error, setError] = useState("");
@@ -54,8 +53,14 @@ export default function App() {
     setSelectedID((selectedID) => (id === selectedID ? null : id));
   }
 
+  function handleWatched(movie) {
+    setWatched((watched) => [...watched, movie]);
+  }
   function handleCloseDetails() {
     setSelectedID(null);
+  }
+  function handleDeleteWatched(id) {
+    setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   }
   useEffect(
     function () {
@@ -102,11 +107,6 @@ export default function App() {
 
       <Main>
         <Box>
-          {/* {isLoading ? (
-            <Loader />
-          ) : (
-            <MoviesList tempMovieData={tempMovieData} movies={movies} />
-          )} */}
           {isLoading && <Loader />}
           {!isLoading && !error && (
             <MoviesList movies={movies} handleSelectMovie={handleSelectMovie} />
@@ -119,11 +119,16 @@ export default function App() {
               onCloseMovieDetail={handleCloseDetails}
               selectedID={selectedID}
               KEY={KEY}
+              onAddWatched={handleWatched}
+              watched={watched}
             />
           ) : (
             <>
               <WatchedSummary watched={watched} average={average} />
-              <WatchedMoviesList watched={watched} />
+              <WatchedMoviesList
+                watched={watched}
+                onDeleteWatched={handleDeleteWatched}
+              />
             </>
           )}
         </Box>

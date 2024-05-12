@@ -5,7 +5,7 @@ const starStyle = {
   width: "24px",
   display: "block",
   cursor: "pointer",
-};
+}; 
 
 export default function Star({ onRate, full, onHoverIn, onHoverOut }) {
   return (
